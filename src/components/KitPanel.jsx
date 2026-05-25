@@ -66,7 +66,11 @@ function FontRow({ label, font, onChange }) {
 function KitPanel({ kit, onClose, onUpdate, onDelete }) {
   const [form, setForm] = useState({
     name:   kit.name,
-    colors: { ...kit.colors },
+    colors: {
+      secondary2: '#e0dbd2',
+      accent2:    '#2A4858',
+      ...kit.colors
+    },
     fonts:  {
       title: { ...kit.fonts.title },
       body:  { ...kit.fonts.body },
@@ -145,9 +149,11 @@ function KitPanel({ kit, onClose, onUpdate, onDelete }) {
           <div className="space-y-2">
             <Label>Colores</Label>
             <div className="bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.04] px-4" style={{ borderRadius: 6 }}>
-              <ColorRow label="Principal"  value={form.colors.primary}   onChange={v => setColor('primary',   v)} />
-              <ColorRow label="Fondo"      value={form.colors.secondary} onChange={v => setColor('secondary', v)} />
-              <ColorRow label="Acento"     value={form.colors.accent}    onChange={v => setColor('accent',    v)} />
+              <ColorRow label="Texto"      value={form.colors.primary}    onChange={v => setColor('primary',    v)} />
+              <ColorRow label="Fondo 1"    value={form.colors.secondary}  onChange={v => setColor('secondary',  v)} />
+              <ColorRow label="Fondo 2"    value={form.colors.secondary2} onChange={v => setColor('secondary2', v)} />
+              <ColorRow label="Acento 1"   value={form.colors.accent}     onChange={v => setColor('accent',     v)} />
+              <ColorRow label="Acento 2"   value={form.colors.accent2}    onChange={v => setColor('accent2',    v)} />
             </div>
           </div>
 

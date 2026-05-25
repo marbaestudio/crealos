@@ -223,27 +223,32 @@ function Canvas({ id = 'crealos-canvas', data = {}, format = 'portrait', kit }) 
         </div>
       )}
 
-      {/* ── Layout D: Cita · comilla grande + título centrado ── */}
+      {/* ── Layout D: Ficha · título en caja accent ── */}
       {layout === 'd' && (
-        <div className="absolute inset-0 flex flex-col" style={{ padding: pad }}>
-          <div className="relative z-10 flex-1 flex flex-col justify-center space-y-6">
-            <span style={{ fontFamily: titleFont, fontSize: isStory ? '80px' : '96px', lineHeight: 0.6, color: accent, opacity: 0.9, display: 'block', userSelect: 'none' }}>
-              "
-            </span>
-            <h1 contentEditable suppressContentEditableWarning className="focus:outline-none" style={{ ...sTitle, fontSize: isStory ? '28px' : '34px', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: '100%' }}>
-              {data.title || 'Tu cita aquí.'}
-            </h1>
-            <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={{ ...sBody, opacity: 0.4 }}>
+        <div className="absolute inset-0 flex flex-col justify-between" style={{ padding: pad }}>
+          <div className="relative z-10">
+            <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={sCategory}>
+              {data.category || ''}
+            </p>
+          </div>
+
+          <div className="relative z-10 space-y-4">
+            <div style={{ backgroundColor: accent, padding: isStory ? '20px 22px' : '24px 26px', borderRadius: 4 }}>
+              <h1 contentEditable suppressContentEditableWarning className="focus:outline-none"
+                style={{ ...sTitle, color: '#ffffff', maxWidth: '100%', fontSize: isStory ? '30px' : '38px', letterSpacing: '-0.03em' }}>
+                {data.title || 'Tu título aquí.'}
+              </h1>
+            </div>
+            <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={sBody}>
               {data.subtitle || ''}
             </p>
           </div>
+
           <div className="relative z-10 flex items-end justify-between">
             <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={sFooter}>
               {data.footer || ''}
             </p>
-            <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={{ ...sCategory, letterSpacing: '0.12em' }}>
-              {data.category || ''}
-            </p>
+            {kit?.logo && <img src={kit.logo} alt="" className="h-6 object-contain opacity-70" />}
           </div>
         </div>
       )}
@@ -278,33 +283,30 @@ function Canvas({ id = 'crealos-canvas', data = {}, format = 'portrait', kit }) 
         </div>
       )}
 
-      {/* ── Layout F: Grande · título ocupa todo + footer ── */}
+      {/* ── Layout F: Línea · divisor accent horizontal + título abajo ── */}
       {layout === 'f' && (
         <div className="absolute inset-0 flex flex-col justify-between" style={{ padding: pad }}>
-          <div className="relative z-10">
+          <div className="relative z-10 space-y-5">
             <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={sCategory}>
               {data.category || ''}
             </p>
-          </div>
-
-          <div className="relative z-10 space-y-5">
+            <div style={{ height: 3, backgroundColor: accent, borderRadius: 2 }} />
             <h1 contentEditable suppressContentEditableWarning className="focus:outline-none"
-              style={{ ...sTitle, fontSize: isStory ? '52px' : '64px', lineHeight: 0.88, maxWidth: '100%' }}>
+              style={{ ...sTitle, fontSize: isStory ? '32px' : '40px', lineHeight: 1.0, letterSpacing: '-0.03em', maxWidth: '100%' }}>
               {data.title || 'Tu título aquí.'}
             </h1>
-            <div className="flex items-center gap-3">
-              <div className="h-[2px] w-8 rounded-full" style={{ backgroundColor: accent }} />
-              <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={{ ...sBody, fontSize: '13px' }}>
-                {data.subtitle || ''}
-              </p>
-            </div>
           </div>
 
-          <div className="relative z-10 flex items-end justify-between">
-            <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={sFooter}>
-              {data.footer || ''}
+          <div className="relative z-10 space-y-4">
+            <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={sBody}>
+              {data.subtitle || ''}
             </p>
-            {kit?.logo && <img src={kit.logo} alt="" className="h-6 object-contain opacity-70" />}
+            <div className="flex items-end justify-between">
+              <p contentEditable suppressContentEditableWarning className="focus:outline-none" style={sFooter}>
+                {data.footer || ''}
+              </p>
+              {kit?.logo && <img src={kit.logo} alt="" className="h-6 object-contain opacity-70" />}
+            </div>
           </div>
         </div>
       )}

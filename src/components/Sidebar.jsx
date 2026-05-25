@@ -151,11 +151,11 @@ function EstiloPanel({
                 <rect x="2" y="17" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.3"/>
               </svg>
             )},
-            { value: 'd', label: 'Cita', icon: (
+            { value: 'd', label: 'Ficha', icon: (
               <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
-                <text x="2" y="10" fontSize="10" fill="currentColor" opacity="0.7" fontFamily="serif">"</text>
-                <rect x="2" y="11" width="18" height="2.5" rx="1" fill="currentColor" opacity="0.9"/>
-                <rect x="2" y="15" width="12" height="1.5" rx="0.75" fill="currentColor" opacity="0.4"/>
+                <rect x="2" y="2" width="9" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+                <rect x="2" y="7" width="20" height="6" rx="2" fill="currentColor" opacity="0.75"/>
+                <rect x="2" y="15" width="14" height="1.5" rx="0.75" fill="currentColor" opacity="0.4"/>
                 <rect x="2" y="18" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.25"/>
               </svg>
             )},
@@ -168,12 +168,12 @@ function EstiloPanel({
                 <rect x="2" y="18" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.25"/>
               </svg>
             )},
-            { value: 'f', label: 'Grande', icon: (
+            { value: 'f', label: 'Línea', icon: (
               <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
                 <rect x="2" y="2" width="9" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
-                <rect x="2" y="6" width="20" height="7" rx="1" fill="currentColor" opacity="0.9"/>
-                <rect x="2" y="15" width="5" height="1.5" rx="0.75" fill="currentColor" opacity="0.6"/>
-                <rect x="9" y="15" width="12" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+                <rect x="2" y="5" width="20" height="1.5" rx="0.75" fill="currentColor" opacity="0.8"/>
+                <rect x="2" y="8" width="18" height="3" rx="1" fill="currentColor" opacity="0.9"/>
+                <rect x="2" y="14" width="14" height="1.5" rx="0.75" fill="currentColor" opacity="0.4"/>
                 <rect x="2" y="18" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.25"/>
               </svg>
             )},
@@ -196,30 +196,68 @@ function EstiloPanel({
 
       <div className="my-2 border-t border-black/[0.05] dark:border-white/[0.04]" />
 
-      {/* Color de fondo */}
+      {/* Paleta */}
       <div className="px-3 mb-1">
         <div className="px-2 py-1.5 flex items-center gap-1.5">
-          <span className="text-[10px] uppercase tracking-[0.12em] text-black/35 dark:text-white/35 font-medium">Color de fondo</span>
+          <span className="text-[10px] uppercase tracking-[0.12em] text-black/35 dark:text-white/35 font-medium">Paleta</span>
           {slides.length > 1 && <span className="text-[10px] text-black/20 dark:text-white/20">· slide {currentSlide + 1}</span>}
         </div>
-        <div className="px-2 py-1 flex items-center gap-3">
-          <label className="relative w-7 h-7 overflow-hidden cursor-pointer shrink-0" style={{ borderRadius: 6 }}>
-            <div className="absolute inset-0" style={{ backgroundColor: currentBgCol }} />
-            <input
-              type="color"
-              value={currentBgCol}
-              onChange={e => onSlideUpdate(currentSlide, { bgColor: e.target.value })}
-              className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-            />
-          </label>
-          <span className="text-[11px] font-mono text-black/40 dark:text-white/40 flex-1">{currentBgCol}</span>
-          {slideData.bgColor && (
-            <button
-              onClick={() => onSlideUpdate(currentSlide, { bgColor: undefined })}
-              className="text-[11px] text-black/30 dark:text-white/30 hover:text-black dark:hover:text-white transition-colors">
-              Reset
-            </button>
-          )}
+        <div className="px-2 space-y-2.5 pb-1">
+
+          {/* Fondos */}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-black/30 dark:text-white/30 w-12 shrink-0">Fondo</span>
+            <div className="flex gap-1.5 flex-1">
+              {[activeKit?.colors?.secondary || '#f5f5f3', activeKit?.colors?.secondary2 || '#e0dbd2'].map((col, i) => {
+                const isActive = currentBgCol === col
+                return (
+                  <button key={i} onClick={() => onSlideUpdate(currentSlide, { bgColor: col })}
+                    title={col}
+                    className={`w-7 h-7 shrink-0 transition-all ${isActive ? 'ring-2 ring-black dark:ring-white ring-offset-1' : 'opacity-70 hover:opacity-100'}`}
+                    style={{ backgroundColor: col, borderRadius: 5 }} />
+                )
+              })}
+              <label className="relative w-7 h-7 overflow-hidden cursor-pointer shrink-0" title="Color personalizado" style={{ borderRadius: 5 }}>
+                <div className="absolute inset-0" style={{ backgroundColor: currentBgCol }} />
+                <input type="color" value={currentBgCol} onChange={e => onSlideUpdate(currentSlide, { bgColor: e.target.value })}
+                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" />
+              </label>
+              <span className="text-[10px] font-mono text-black/30 dark:text-white/30 self-center">{currentBgCol}</span>
+              {slideData.bgColor && (
+                <button onClick={() => onSlideUpdate(currentSlide, { bgColor: undefined })}
+                  className="text-[10px] text-black/25 dark:text-white/25 hover:text-black dark:hover:text-white transition-colors ml-auto">
+                  Reset
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Acentos */}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-black/30 dark:text-white/30 w-12 shrink-0">Acento</span>
+            <div className="flex gap-1.5 flex-1">
+              {[activeKit?.colors?.accent || '#E8593C', activeKit?.colors?.accent2 || '#2A4858'].map((col, i) => {
+                const activeAccent = slideData.accentColor || activeKit?.colors?.accent || '#E8593C'
+                const isActive = activeAccent === col
+                return (
+                  <button key={i} onClick={() => onSlideUpdate(currentSlide, { accentColor: col })}
+                    title={col}
+                    className={`w-7 h-7 shrink-0 transition-all ${isActive ? 'ring-2 ring-black dark:ring-white ring-offset-1' : 'opacity-70 hover:opacity-100'}`}
+                    style={{ backgroundColor: col, borderRadius: 5 }} />
+                )
+              })}
+              <span className="text-[10px] font-mono text-black/30 dark:text-white/30 self-center">
+                {slideData.accentColor || activeKit?.colors?.accent || '#E8593C'}
+              </span>
+              {slideData.accentColor && (
+                <button onClick={() => onSlideUpdate(currentSlide, { accentColor: undefined })}
+                  className="text-[10px] text-black/25 dark:text-white/25 hover:text-black dark:hover:text-white transition-colors ml-auto">
+                  Reset
+                </button>
+              )}
+            </div>
+          </div>
+
         </div>
       </div>
 
