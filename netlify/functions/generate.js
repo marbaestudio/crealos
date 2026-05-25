@@ -99,7 +99,7 @@ Devolvé ÚNICAMENTE el JSON válido. Sin markdown, sin bloques de código, sin 
     if (!res.ok) {
       const errText = await res.text()
       console.error('Gemini error:', res.status, errText)
-      return { statusCode: 502, headers, body: JSON.stringify({ error: `Error Gemini ${res.status}.` }) }
+      return { statusCode: 502, headers, body: JSON.stringify({ error: `Error Gemini ${res.status}: ${errText}` }) }
     }
 
     const data = await res.json()
