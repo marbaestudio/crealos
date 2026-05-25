@@ -2,7 +2,7 @@ const STORAGE_KEY = 'crealos_kits'
 const MAX_KITS = 3
 
 const DEFAULT_KIT = {
-  colors: { primary: '#0f0f0f', secondary: '#f5f5f3', secondary2: '#e0dbd2', accent: '#E8593C', accent2: '#2A4858' },
+  colors: { primary: '#0f0f0f', primary2: '#ffffff', secondary: '#f5f5f3', secondary2: '#e0dbd2', accent: '#E8593C', accent2: '#2A4858' },
   fonts: {
     title: { name: '', dataUrl: null },
     body: { name: '', dataUrl: null },

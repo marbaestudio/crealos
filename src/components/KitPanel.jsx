@@ -67,6 +67,7 @@ function KitPanel({ kit, onClose, onUpdate, onDelete }) {
   const [form, setForm] = useState({
     name:   kit.name,
     colors: {
+      primary2:   '#ffffff',
       secondary2: '#e0dbd2',
       accent2:    '#2A4858',
       ...kit.colors
@@ -149,7 +150,8 @@ function KitPanel({ kit, onClose, onUpdate, onDelete }) {
           <div className="space-y-2">
             <Label>Colores</Label>
             <div className="bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.04] px-4" style={{ borderRadius: 6 }}>
-              <ColorRow label="Texto"      value={form.colors.primary}    onChange={v => setColor('primary',    v)} />
+              <ColorRow label="Texto 1"    value={form.colors.primary}    onChange={v => setColor('primary',    v)} />
+              <ColorRow label="Texto 2"    value={form.colors.primary2}   onChange={v => setColor('primary2',   v)} />
               <ColorRow label="Fondo 1"    value={form.colors.secondary}  onChange={v => setColor('secondary',  v)} />
               <ColorRow label="Fondo 2"    value={form.colors.secondary2} onChange={v => setColor('secondary2', v)} />
               <ColorRow label="Acento 1"   value={form.colors.accent}     onChange={v => setColor('accent',     v)} />

@@ -15,7 +15,7 @@ function Canvas({ id = 'crealos-canvas', data = {}, format = 'portrait', kit }) 
   const isStory = format === 'story'
 
   const accent       = data.accentColor || kit?.colors?.accent || '#E8593C'
-  const primaryColor = kit?.colors?.primary                    || '#0f0f0f'
+  const primaryColor = data.primaryColor || kit?.colors?.primary || '#0f0f0f'
   const bgColor      = data.bgColor || kit?.colors?.secondary  || '#f5f5f3'
   const bgImage      = data.bgImage  || null
   const bgOpacity    = data.bgOpacity ?? 0.2

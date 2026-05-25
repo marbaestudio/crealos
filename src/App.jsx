@@ -9,10 +9,10 @@ import { useExport } from './hooks/useExport'
 const CANVAS_ID = 'crealos-canvas'
 
 const DEFAULT_SLIDE = {
-  category: 'ARQUITECTURA',
-  title: 'Diseñar bien reduce costos.',
-  subtitle: 'La planificación correcta evita errores, retrasos y sobrecostos.',
-  footer: '@crealos'
+  category: 'CATEGORÍA',
+  title: 'Tu titular va aquí.',
+  subtitle: 'El subtítulo acompaña y amplía el mensaje principal.',
+  footer: '@marca'
 }
 
 function loadFonts(kit) {

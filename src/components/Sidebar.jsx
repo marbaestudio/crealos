@@ -204,6 +204,32 @@ function EstiloPanel({
         </div>
         <div className="px-2 space-y-2.5 pb-1">
 
+          {/* Texto */}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-black/30 dark:text-white/30 w-12 shrink-0">Texto</span>
+            <div className="flex gap-1.5 flex-1">
+              {[activeKit?.colors?.primary || '#0f0f0f', activeKit?.colors?.primary2 || '#ffffff'].map((col, i) => {
+                const activePrimary = slideData.primaryColor || activeKit?.colors?.primary || '#0f0f0f'
+                const isActive = activePrimary === col
+                return (
+                  <button key={i} onClick={() => onSlideUpdate(currentSlide, { primaryColor: col })}
+                    title={col}
+                    className={`w-7 h-7 shrink-0 transition-all border border-black/10 dark:border-white/10 ${isActive ? 'ring-2 ring-black dark:ring-white ring-offset-1' : 'opacity-70 hover:opacity-100'}`}
+                    style={{ backgroundColor: col, borderRadius: 5 }} />
+                )
+              })}
+              <span className="text-[10px] font-mono text-black/30 dark:text-white/30 self-center">
+                {slideData.primaryColor || activeKit?.colors?.primary || '#0f0f0f'}
+              </span>
+              {slideData.primaryColor && (
+                <button onClick={() => onSlideUpdate(currentSlide, { primaryColor: undefined })}
+                  className="text-[10px] text-black/25 dark:text-white/25 hover:text-black dark:hover:text-white transition-colors ml-auto">
+                  Reset
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Fondos */}
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-black/30 dark:text-white/30 w-12 shrink-0">Fondo</span>
