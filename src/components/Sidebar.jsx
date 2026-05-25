@@ -267,19 +267,19 @@ function EstiloPanel({
 function ContenidoPanel({
   kits, activeKitId, onKitsUpdate,
   format, onFormatChange, onSlidesChange,
-  currentSlide, slides,
-  topic, onTopicChange,
-  tipo,  onTipoChange,
-  json,  onJsonChange
+  currentSlide, slides
 }) {
   const activeKit = kits.find(k => k.id === activeKitId)
 
+  const [topic, setTopic]               = useState('')
+  const [tipo, setTipo]                 = useState('carousel')
   const [isGenerating, setIsGenerating] = useState(false)
   const [genError, setGenError]         = useState('')
   const [showContext, setShowContext]   = useState(false)
   const [brandContext, setBrandContext] = useState(
     () => localStorage.getItem('crealos-brand-context') || ''
   )
+  const [json, setJson]                 = useState('')
   const [jsonError, setJsonError]       = useState('')
   const [showTemplates, setShowTemplates] = useState(false)
   const [templateName, setTemplateName]   = useState('')
@@ -320,7 +320,7 @@ function ContenidoPanel({
       if (!res.ok || data.error) {
         setGenError(data.error || 'Error al generar.')
       } else {
-        onJsonChange(JSON.stringify(JSON.parse(data.result), null, 2))
+        setJson(JSON.stringify(JSON.parse(data.result), null, 2))
         setJsonError('')
       }
     } catch {
@@ -424,7 +424,7 @@ function ContenidoPanel({
           {/* Tipo */}
           <div className="flex gap-1">
             {['carousel', 'post', 'story'].map(t => (
-              <button key={t} onClick={() => onTipoChange(t)}
+              <button key={t} onClick={() => setTipo(t)}
                 className={`flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-colors ${
                   tipo === t
                     ? 'bg-black dark:bg-white text-white dark:text-black'
@@ -439,7 +439,7 @@ function ContenidoPanel({
           <textarea
             rows={4}
             value={topic}
-            onChange={e => { onTopicChange(e.target.value); setGenError('') }}
+            onChange={e => { setTopic(e.target.value); setGenError('') }}
             placeholder={tipo === 'carousel'
               ? 'Brief. Podés pedir cantidad de slides: "5 slides sobre cómo el diseño reduce costos en obra"'
               : 'Brief del contenido. Ej: Cómo la planificación reduce costos y retrasos en obra'}
@@ -472,7 +472,7 @@ function ContenidoPanel({
         <textarea
           rows={7}
           value={json}
-          onChange={e => { onJsonChange(e.target.value); setJsonError('') }}
+          onChange={e => { setJson(e.target.value); setJsonError('') }}
           placeholder={'{\n  "format": "post",\n  "title": "...",\n  "subtitle": "...",\n  "footer": "@marca"\n}'}
           className="w-full rounded-lg p-3 text-[11px] bg-black/[0.04] dark:bg-white/[0.05] resize-none focus:outline-none font-mono leading-relaxed placeholder:text-black/20 dark:placeholder:text-white/20"
         />
@@ -558,9 +558,6 @@ function Sidebar({
 }) {
   const [tab, setTab] = useState('estilo')
   const [showKitPanel, setShowKitPanel] = useState(false)
-  const [genTopic, setGenTopic] = useState('')
-  const [genTipo, setGenTipo]   = useState('carousel')
-  const [genJson, setGenJson]   = useState('')
   const activeKit = kits.find(k => k.id === activeKitId)
 
   return (
@@ -607,9 +604,6 @@ function Sidebar({
               onSlidesChange={onSlidesChange}
               currentSlide={currentSlide}
               slides={slides}
-              topic={genTopic}      onTopicChange={setGenTopic}
-              tipo={genTipo}        onTipoChange={setGenTipo}
-              json={genJson}        onJsonChange={setGenJson}
             />
           )}
         </div>
