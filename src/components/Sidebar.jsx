@@ -125,33 +125,56 @@ function EstiloPanel({
           <span className="text-[10px] uppercase tracking-[0.12em] text-black/35 dark:text-white/35 font-medium">Diseño</span>
           {slides.length > 1 && <span className="text-[10px] text-black/20 dark:text-white/20">· slide {currentSlide + 1}</span>}
         </div>
-        <div className="flex gap-1 px-2">
+        <div className="grid grid-cols-3 gap-1 px-2">
           {[
             { value: 'a', label: 'Clásico', icon: (
-              <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
-                <rect x="2" y="3" width="14" height="2" rx="1" fill="currentColor" opacity="0.8"/>
-                <rect x="2" y="7" width="20" height="3" rx="1" fill="currentColor" opacity="0.9"/>
-                <rect x="2" y="12" width="16" height="2" rx="1" fill="currentColor" opacity="0.45"/>
-                <rect x="2" y="17" width="8" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+              <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
+                <rect x="2" y="2" width="12" height="1.5" rx="0.75" fill="currentColor" opacity="0.8"/>
+                <rect x="2" y="6" width="18" height="3" rx="1" fill="currentColor" opacity="0.9"/>
+                <rect x="2" y="11" width="14" height="1.5" rx="0.75" fill="currentColor" opacity="0.45"/>
+                <rect x="2" y="16" width="7" height="1.2" rx="0.6" fill="currentColor" opacity="0.3"/>
               </svg>
             )},
             { value: 'b', label: 'Titular', icon: (
-              <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
-                <rect x="2" y="3" width="10" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
-                <rect x="2" y="12" width="14" height="2" rx="1" fill="currentColor" opacity="0.6"/>
-                <rect x="2" y="15" width="20" height="3" rx="1" fill="currentColor" opacity="0.9"/>
-                <rect x="2" y="19" width="8" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
-                <rect x="22" y="19" width="4" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+              <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
+                <rect x="2" y="2" width="9" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+                <rect x="2" y="11" width="12" height="1.5" rx="0.75" fill="currentColor" opacity="0.6"/>
+                <rect x="2" y="14" width="18" height="3" rx="1" fill="currentColor" opacity="0.9"/>
+                <rect x="2" y="18" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.3"/>
               </svg>
             )},
-            { value: 'c', label: 'Foto', icon: (
-              <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
-                <rect x="0" y="0" width="28" height="22" rx="2" fill="currentColor" opacity="0.12"/>
-                <rect x="0" y="11" width="28" height="11" rx="1" fill="currentColor" opacity="0.18"/>
-                <rect x="2" y="3" width="8" height="1.5" rx="0.75" fill="currentColor" opacity="0.35"/>
-                <rect x="2" y="13" width="14" height="2" rx="1" fill="currentColor" opacity="0.65"/>
-                <rect x="2" y="16" width="20" height="3" rx="1" fill="currentColor" opacity="0.9"/>
-                <rect x="2" y="20" width="6" height="1.2" rx="0.6" fill="currentColor" opacity="0.3"/>
+            { value: 'c', label: 'Centrado', icon: (
+              <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
+                <rect x="2" y="2" width="9" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+                <rect x="2" y="8" width="18" height="3" rx="1" fill="currentColor" opacity="0.9"/>
+                <rect x="2" y="13" width="14" height="1.5" rx="0.75" fill="currentColor" opacity="0.45"/>
+                <rect x="2" y="17" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.3"/>
+              </svg>
+            )},
+            { value: 'd', label: 'Cita', icon: (
+              <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
+                <text x="2" y="10" fontSize="10" fill="currentColor" opacity="0.7" fontFamily="serif">"</text>
+                <rect x="2" y="11" width="18" height="2.5" rx="1" fill="currentColor" opacity="0.9"/>
+                <rect x="2" y="15" width="12" height="1.5" rx="0.75" fill="currentColor" opacity="0.4"/>
+                <rect x="2" y="18" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.25"/>
+              </svg>
+            )},
+            { value: 'e', label: 'Borde', icon: (
+              <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
+                <rect x="2" y="2" width="9" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+                <rect x="6" y="8" width="1.5" height="9" rx="0.75" fill="currentColor" opacity="0.7"/>
+                <rect x="10" y="8" width="14" height="2.5" rx="1" fill="currentColor" opacity="0.9"/>
+                <rect x="10" y="12" width="10" height="1.5" rx="0.75" fill="currentColor" opacity="0.4"/>
+                <rect x="2" y="18" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.25"/>
+              </svg>
+            )},
+            { value: 'f', label: 'Grande', icon: (
+              <svg width="26" height="20" viewBox="0 0 26 20" fill="none">
+                <rect x="2" y="2" width="9" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+                <rect x="2" y="6" width="20" height="7" rx="1" fill="currentColor" opacity="0.9"/>
+                <rect x="2" y="15" width="5" height="1.5" rx="0.75" fill="currentColor" opacity="0.6"/>
+                <rect x="9" y="15" width="12" height="1.5" rx="0.75" fill="currentColor" opacity="0.3"/>
+                <rect x="2" y="18" width="7" height="1" rx="0.5" fill="currentColor" opacity="0.25"/>
               </svg>
             )},
           ].map(o => (
@@ -159,7 +182,7 @@ function EstiloPanel({
               key={o.value}
               onClick={() => onSlideUpdate(currentSlide, { layout: o.value })}
               title={o.label}
-              className={`flex-1 flex flex-col items-center gap-1 py-2 rounded-lg transition-colors ${
+              className={`flex flex-col items-center gap-1 py-2 rounded-lg transition-colors ${
                 (slideData.layout || 'a') === o.value
                   ? 'bg-black dark:bg-white text-white dark:text-black'
                   : 'hover:bg-black/[0.05] dark:hover:bg-white/[0.06] text-black/45 dark:text-white/45'
@@ -266,7 +289,7 @@ function EstiloPanel({
 // ── Sección Contenido ─────────────────────────────────────────────────────────
 function ContenidoPanel({
   kits, activeKitId, onKitsUpdate,
-  format, onFormatChange, onSlidesChange,
+  format, onFormatChange, onSlidesChange, onSlideUpdate,
   currentSlide, slides
 }) {
   const activeKit = kits.find(k => k.id === activeKitId)
@@ -274,6 +297,7 @@ function ContenidoPanel({
   const [topic, setTopic]               = useState('')
   const [tipo, setTipo]                 = useState('carousel')
   const [isGenerating, setIsGenerating] = useState(false)
+  const [isRegenerating, setIsRegenerating] = useState(false)
   const [genError, setGenError]         = useState('')
   const [showContext, setShowContext]   = useState(false)
   const [brandContext, setBrandContext] = useState(
@@ -284,6 +308,10 @@ function ContenidoPanel({
   const [showTemplates, setShowTemplates] = useState(false)
   const [templateName, setTemplateName]   = useState('')
   const [templateMsg, setTemplateMsg]     = useState('')
+  const [history, setHistory]           = useState(
+    () => { try { return JSON.parse(localStorage.getItem('crealos-gen-history') || '[]') } catch { return [] } }
+  )
+  const [showHistory, setShowHistory]   = useState(false)
 
   function saveBrandContext(val) {
     setBrandContext(val)
@@ -299,34 +327,61 @@ function ContenidoPanel({
     e.target.value = ''
   }
 
+  function addToHistory(jsonStr) {
+    const label = topic.trim().slice(0, 40) || 'Sin título'
+    const entry = { ts: Date.now(), label, json: jsonStr }
+    const updated = [entry, ...history].slice(0, 8)
+    setHistory(updated)
+    localStorage.setItem('crealos-gen-history', JSON.stringify(updated))
+  }
+
+  async function callGenerate(overrideTipo) {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        topic: topic.trim(),
+        tipo: overrideTipo || tipo,
+        brandContext,
+        kitName:   activeKit?.name   || '',
+        kitColors: activeKit?.colors || null,
+        kitFonts:  activeKit?.fonts  || null
+      })
+    })
+    const data = await res.json()
+    if (!res.ok || data.error) throw new Error(data.error || 'Error al generar.')
+    return JSON.parse(data.result)
+  }
+
   async function handleGenerate() {
     if (!topic.trim() || isGenerating) return
     setIsGenerating(true)
     setGenError('')
     try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          topic: topic.trim(),
-          tipo,
-          brandContext,
-          kitName:   activeKit?.name   || '',
-          kitColors: activeKit?.colors || null,
-          kitFonts:  activeKit?.fonts  || null
-        })
-      })
-      const data = await res.json()
-      if (!res.ok || data.error) {
-        setGenError(data.error || 'Error al generar.')
-      } else {
-        setJson(JSON.stringify(JSON.parse(data.result), null, 2))
-        setJsonError('')
-      }
-    } catch {
-      setGenError('No se pudo conectar. Revisá que la app esté desplegada en Netlify.')
+      const parsed = await callGenerate()
+      const formatted = JSON.stringify(parsed, null, 2)
+      setJson(formatted)
+      setJsonError('')
+      addToHistory(formatted)
+    } catch (err) {
+      setGenError(err.message)
     } finally {
       setIsGenerating(false)
+    }
+  }
+
+  async function handleRegenerateSlide() {
+    if (!topic.trim() || isRegenerating) return
+    setIsRegenerating(true)
+    setGenError('')
+    try {
+      const parsed = await callGenerate('post')
+      const { category, title, subtitle, footer, accentColor } = parsed
+      onSlideUpdate(currentSlide, { category, title, subtitle, footer, accentColor })
+    } catch (err) {
+      setGenError(err.message)
+    } finally {
+      setIsRegenerating(false)
     }
   }
 
@@ -448,16 +503,56 @@ function ContenidoPanel({
 
           {genError && <p className="text-[11px] text-red-500">{genError}</p>}
 
-          <button
-            onClick={handleGenerate}
-            disabled={!topic.trim() || isGenerating}
-            className={`w-full ${btnBlack} disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2`}>
-            {isGenerating
-              ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Generando...</>
-              : <><Wand2 className="w-3.5 h-3.5" />Generar</>}
-          </button>
+          <div className="flex gap-1.5">
+            <button
+              onClick={handleGenerate}
+              disabled={!topic.trim() || isGenerating || isRegenerating}
+              className={`flex-1 ${btnBlack} disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2`}>
+              {isGenerating
+                ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Generando...</>
+                : <><Wand2 className="w-3.5 h-3.5" />Generar</>}
+            </button>
+            {slides.length > 1 && (
+              <button
+                onClick={handleRegenerateSlide}
+                disabled={!topic.trim() || isGenerating || isRegenerating}
+                title={`Regenerar slide ${currentSlide + 1}`}
+                className={`${btnGray} disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 px-3`}>
+                {isRegenerating
+                  ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  : <><Wand2 className="w-3 h-3" /><span className="text-[11px]">{currentSlide + 1}</span></>}
+              </button>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Historial */}
+      {history.length > 0 && (
+        <div className="px-3 mb-1">
+          <button
+            onClick={() => setShowHistory(v => !v)}
+            className="w-full flex items-center justify-between px-2 py-1.5 group">
+            <span className="text-[10px] uppercase tracking-[0.12em] text-black/35 dark:text-white/35 font-medium">
+              Historial <span className="normal-case tracking-normal text-black/20 dark:text-white/20">{history.length}</span>
+            </span>
+            <Plus className={`w-3 h-3 text-black/30 dark:text-white/30 transition-transform ${showHistory ? 'rotate-45' : ''}`} />
+          </button>
+          {showHistory && (
+            <div className="space-y-0.5 mb-2">
+              {history.map((h, i) => (
+                <button
+                  key={h.ts}
+                  onClick={() => { setJson(h.json); setJsonError('') }}
+                  className="w-full flex items-center gap-2 px-2 py-2 rounded-lg text-left text-[12px] text-black/55 dark:text-white/55 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white transition-colors min-w-0">
+                  <span className="text-[10px] text-black/25 dark:text-white/25 shrink-0 tabular-nums w-3">{i + 1}</span>
+                  <span className="truncate">{h.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="my-2 border-t border-black/[0.05] dark:border-white/[0.04]" />
 
@@ -602,6 +697,7 @@ function Sidebar({
               format={format}
               onFormatChange={onFormatChange}
               onSlidesChange={onSlidesChange}
+              onSlideUpdate={onSlideUpdate}
               currentSlide={currentSlide}
               slides={slides}
             />

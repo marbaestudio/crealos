@@ -3,7 +3,6 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Canvas from './components/Canvas'
 import CarouselNav from './components/CarouselNav'
-import GridPreview from './components/GridPreview'
 import { getKits } from './store/kitStore'
 import { useExport } from './hooks/useExport'
 
@@ -45,7 +44,6 @@ function App() {
   const [format, setFormat]       = useState('portrait')
   const [slides, setSlides]       = useState([{ ...DEFAULT_SLIDE }])
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [showGrid, setShowGrid]   = useState(false)
   const [isExporting, setIsExporting] = useState(false)
 
   const { exportPNG, exportAllPNG } = useExport()
@@ -186,22 +184,11 @@ function App() {
               onDuplicate={handleDuplicate}
               onDelete={handleDelete}
               onReorder={handleReorder}
-              onShowGrid={() => setShowGrid(true)}
             />
           </div>
 
         </div>
 
-        {showGrid && (
-          <GridPreview
-            slides={slides}
-            format={format}
-            kit={activeKit}
-            currentSlide={currentSlide}
-            onSelect={setCurrentSlide}
-            onClose={() => setShowGrid(false)}
-          />
-        )}
 
       </div>
     </div>

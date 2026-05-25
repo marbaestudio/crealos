@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, Copy, LayoutGrid, Trash2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Copy, Trash2 } from 'lucide-react'
 
-function CarouselNav({ current, total, onChange, onDuplicate, onDelete, onReorder, onShowGrid }) {
+function CarouselNav({ current, total, onChange, onDuplicate, onDelete, onReorder }) {
   const [dragFrom, setDragFrom] = useState(null)
   const [dragOver, setDragOver] = useState(null)
 
@@ -76,9 +76,6 @@ function CarouselNav({ current, total, onChange, onDuplicate, onDelete, onReorde
           disabled={total <= 1}
           className={`${btnCls} hover:bg-red-500/10 hover:border-red-400/30 disabled:opacity-25`}>
           <Trash2 className="w-3 h-3" />
-        </button>
-        <button onClick={onShowGrid} title="Vista grilla del carrusel" className={btnCls}>
-          <LayoutGrid className="w-3 h-3" />
         </button>
       </div>
     </div>
