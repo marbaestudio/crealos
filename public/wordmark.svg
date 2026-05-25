@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 265 56">
+  <defs>
+    <style><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+    ]]></style>
+  </defs>
+
+  <!-- Cada letra posicionada manualmente (spacing 5px entre cada par) -->
+  <text font-family="'Montserrat', sans-serif" font-weight="500" font-size="48" fill="#1a1a1a">
+    <tspan x="0"   y="50">C</tspan>
+    <tspan x="38"  y="50">R</tspan>
+    <tspan x="76"  y="50">E</tspan>
+    <tspan x="157" y="50">L</tspan>
+    <tspan x="189" y="50">O</tspan>
+    <tspan x="231" y="50">S</tspan>
+  </text>
+
+  <!-- A vectorial: hueco de 90° derecha, equidistante de E y L -->
+  <path
+    d="M 117 50 L 134 16 L 152 50 Z
+       M 123 50 L 134 27 L 146 50 Z"
+    fill="#1a1a1a"
+    fill-rule="evenodd"/>
+</svg>

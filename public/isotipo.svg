@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <g stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round">
+    <!-- 9 rays (C-shape: open on the right, gap at 60°–120°) -->
+    <!-- top -->
+    <line x1="50"   y1="25"   x2="50"   y2="8"   />
+    <!-- upper right -->
+    <line x1="62.5" y1="28.3" x2="71"   y2="13.6"/>
+    <!-- lower right -->
+    <line x1="62.5" y1="71.7" x2="71"   y2="86.4"/>
+    <!-- bottom -->
+    <line x1="50"   y1="75"   x2="50"   y2="92"  />
+    <!-- lower left -->
+    <line x1="37.5" y1="71.7" x2="29"   y2="86.4"/>
+    <!-- left-lower -->
+    <line x1="28.3" y1="62.5" x2="13.6" y2="71"  />
+    <!-- left -->
+    <line x1="25"   y1="50"   x2="8"    y2="50"  />
+    <!-- left-upper -->
+    <line x1="28.3" y1="37.5" x2="13.6" y2="29"  />
+    <!-- upper left -->
+    <line x1="37.5" y1="28.3" x2="29"   y2="13.6"/>
+  </g>
+</svg>
