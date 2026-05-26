@@ -235,7 +235,7 @@ function Canvas({ id = 'crealos-canvas', data = {}, format = 'portrait', kit }) 
           <div className="relative z-10 space-y-4">
             <div style={{ backgroundColor: accent, padding: isStory ? '20px 22px' : '24px 26px', borderRadius: 4 }}>
               <h1 contentEditable suppressContentEditableWarning className="focus:outline-none"
-                style={{ ...sTitle, color: '#ffffff', maxWidth: '100%', fontSize: isStory ? '30px' : '38px', letterSpacing: '-0.03em' }}>
+                style={{ ...sTitle, color: '#ffffff', maxWidth: '100%', fontSize: isStory ? '30px' : '38px', letterSpacing: '-0.03em', lineHeight: 1.05 }}>
                 {data.title || 'Tu título aquí.'}
               </h1>
             </div>
