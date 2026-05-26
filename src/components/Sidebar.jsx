@@ -25,6 +25,65 @@ function Label({ children, sub }) {
   )
 }
 
+// ── Sección Inicio ────────────────────────────────────────────────────────────
+function InicioPanel({ onStart }) {
+  const steps = [
+    { n: '01', title: 'Creá tu kit de marca', body: 'Definí colores, tipografías y logo en la pestaña Estilo.' },
+    { n: '02', title: 'Generá el contenido', body: 'Escribí un brief en Contenido y la IA arma el carrusel.' },
+    { n: '03', title: 'Ajustá el diseño', body: 'Elegí layout, paleta y fondo para cada slide.' },
+    { n: '04', title: 'Exportá', body: 'Descargá PNG slide a slide o el lote completo en ZIP.' },
+  ]
+
+  return (
+    <div className="py-6 px-5 flex flex-col gap-6">
+
+      {/* Isotipo + descripción */}
+      <div className="flex flex-col gap-3">
+        <img src="/isotipo.svg" alt="" className="h-8 dark:invert self-start" />
+        <p className="text-[13px] leading-relaxed text-black/70 dark:text-white/70">
+          Herramienta de diseño para crear posts y carruseles de marca para redes sociales — con IA y sin fricción.
+        </p>
+      </div>
+
+      {/* Pasos */}
+      <div className="space-y-3">
+        {steps.map(s => (
+          <div key={s.n} className="flex gap-3">
+            <span className="text-[10px] font-mono text-black/25 dark:text-white/25 pt-0.5 shrink-0 w-5">{s.n}</span>
+            <div>
+              <p className="text-[12px] font-medium text-black/80 dark:text-white/80 leading-tight">{s.title}</p>
+              <p className="text-[11px] text-black/45 dark:text-white/45 leading-relaxed mt-0.5">{s.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <button
+        onClick={onStart}
+        className="w-full h-9 rounded text-[12px] font-medium bg-black dark:bg-white text-white dark:text-black hover:opacity-85 transition-opacity">
+        Empezar →
+      </button>
+
+      {/* Formatos soportados */}
+      <div className="border-t border-black/[0.05] dark:border-white/[0.04] pt-4 space-y-1.5">
+        <p className="text-[10px] uppercase tracking-[0.12em] text-black/25 dark:text-white/25 font-medium">Formatos</p>
+        {[
+          ['Post vertical', '4:5 — Instagram feed'],
+          ['Post cuadrado', '1:1 — Instagram / LinkedIn'],
+          ['Historia',      '9:16 — Stories / Reels cover'],
+        ].map(([f, d]) => (
+          <div key={f} className="flex items-baseline justify-between">
+            <span className="text-[12px] text-black/55 dark:text-white/55">{f}</span>
+            <span className="text-[10px] text-black/30 dark:text-white/30">{d}</span>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  )
+}
+
 // ── Sección Estilo ────────────────────────────────────────────────────────────
 function EstiloPanel({
   kits, activeKitId, onKitChange, onKitsUpdate,
@@ -715,7 +774,7 @@ function Sidebar({
   onSlidesChange, onSlideUpdate,
   currentSlide, slides
 }) {
-  const [tab, setTab] = useState('estilo')
+  const [tab, setTab] = useState('inicio')
   const [showKitPanel, setShowKitPanel] = useState(false)
   const activeKit = kits.find(k => k.id === activeKitId)
 
@@ -724,7 +783,7 @@ function Sidebar({
       <aside className="w-[300px] shrink-0 border-r border-black/[0.06] dark:border-white/[0.04] bg-[#fafafa] dark:bg-[#181818] flex flex-col">
 
         <div className="flex shrink-0 border-b border-black/[0.06] dark:border-white/[0.04]">
-          {['estilo', 'contenido'].map(t => (
+          {['inicio', 'estilo', 'contenido'].map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -739,6 +798,7 @@ function Sidebar({
         </div>
 
         <div className="flex-1 overflow-y-auto">
+          {tab === 'inicio' && <InicioPanel onStart={() => setTab('estilo')} />}
           {tab === 'estilo' && (
             <EstiloPanel
               kits={kits}

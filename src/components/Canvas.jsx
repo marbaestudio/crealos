@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 const FORMAT_DIMS = {
-  portrait: { w: 432, h: 540 },
-  square:   { w: 432, h: 432 },
-  story:    { w: 324, h: 576 }
+  portrait: { w: 486, h: 607 },
+  square:   { w: 500, h: 500 },
+  story:    { w: 360, h: 640 }
 }
 
 export { FORMAT_DIMS }

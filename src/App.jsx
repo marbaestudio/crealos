@@ -170,7 +170,7 @@ function App() {
           />
 
           {/* Canvas area */}
-          <div className="flex-1 flex flex-col items-center justify-center overflow-auto bg-[#e4e4e2] dark:bg-[#0c0c0c] p-10 gap-0 min-w-0">
+          <div className="flex-1 flex flex-col items-center justify-center overflow-auto bg-[#e4e4e2] dark:bg-[#0c0c0c] p-6 gap-0 min-w-0">
             <Canvas
               id={CANVAS_ID}
               data={slide}
