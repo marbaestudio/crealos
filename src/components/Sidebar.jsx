@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ExternalLink, Plus, Pencil, BookTemplate, Trash2, ImageIcon, Wand2, Loader2 } from 'lucide-react'
 import KitPanel from './KitPanel'
-import { createKit } from '../store/kitStore'
+import { createKit, updateKit } from '../store/kitStore'
 import { getTemplates, saveTemplate, deleteTemplate } from '../store/canvasStore'
 
 
@@ -426,6 +426,9 @@ function ContenidoPanel({
   const [brandContext, setBrandContext] = useState(
     () => localStorage.getItem('crealos-brand-context') || ''
   )
+  const [isExtracting, setIsExtracting]     = useState(false)
+  const [extractMsg, setExtractMsg]         = useState('')
+  const [fontsNeeded, setFontsNeeded]       = useState([])
   const [json, setJson]                 = useState('')
   const [jsonError, setJsonError]       = useState('')
   const [showTemplates, setShowTemplates] = useState(false)
@@ -445,8 +448,108 @@ function ContenidoPanel({
     const file = e.target.files[0]
     if (!file) return
     const reader = new FileReader()
-    reader.onload = ev => saveBrandContext(ev.target.result)
+    reader.onload = async ev => {
+      const text = ev.target.result
+      saveBrandContext(text)
+      if (!activeKit) return
+      setIsExtracting(true)
+      setExtractMsg('')
+      setFontsNeeded([])
+      try {
+        const res = await fetch('/api/extract-brand', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ brandContext: text })
+        })
+        const json = await res.json()
+        if (json.error) throw new Error(json.error)
+
+        // Apply colors
+        const colorUpdates = {}
+        if (json.colors) {
+          for (const [k, v] of Object.entries(json.colors)) {
+            if (v !== null) colorUpdates[k] = v
+          }
+        }
+
+        // Process fonts
+        const needed = []
+        const fontUpdates = {}
+        if (json.fonts) {
+          for (const role of ['title', 'body', 'aux']) {
+            const name = json.fonts[role]
+            if (!name) continue
+            const loaded = await tryLoadGoogleFont(name)
+            if (loaded) {
+              fontUpdates[role] = loaded
+            } else {
+              needed.push({ role, name })
+            }
+          }
+        }
+
+        const hasChanges = Object.keys(colorUpdates).length > 0 || Object.keys(fontUpdates).length > 0
+        if (hasChanges) {
+          const newColors = Object.keys(colorUpdates).length > 0
+            ? { ...activeKit.colors, ...colorUpdates }
+            : activeKit.colors
+          const newFonts = Object.keys(fontUpdates).length > 0
+            ? { ...activeKit.fonts, ...fontUpdates }
+            : activeKit.fonts
+          const updated = updateKit(activeKit.id, { colors: newColors, fonts: newFonts })
+          onKitsUpdate(kits.map(k => k.id === updated.id ? updated : k))
+        }
+
+        setFontsNeeded(needed)
+        setExtractMsg('Kit actualizado ✓')
+        setTimeout(() => setExtractMsg(''), 3000)
+      } catch (err) {
+        setExtractMsg('No se pudo analizar el brand system.')
+        setTimeout(() => setExtractMsg(''), 4000)
+      } finally {
+        setIsExtracting(false)
+      }
+    }
     reader.readAsText(file, 'utf-8')
+    e.target.value = ''
+  }
+
+  async function tryLoadGoogleFont(name) {
+    try {
+      const family = name.replace(/ /g, '+')
+      const cssRes = await fetch(`https://fonts.googleapis.com/css2?family=${family}&display=swap`)
+      if (!cssRes.ok) return null
+      const css = await cssRes.text()
+      const urlMatch = css.match(/url\(([^)]+\.woff2[^)]*)\)/)
+      if (!urlMatch) return null
+      const fontRes = await fetch(urlMatch[1])
+      if (!fontRes.ok) return null
+      const buffer = await fontRes.arrayBuffer()
+      const blob = new Blob([buffer], { type: 'font/woff2' })
+      const dataUrl = await new Promise(resolve => {
+        const r = new FileReader()
+        r.onload = ev2 => resolve(ev2.target.result)
+        r.readAsDataURL(blob)
+      })
+      return { name, dataUrl }
+    } catch {
+      return null
+    }
+  }
+
+  function handleFontFile(e, role) {
+    const file = e.target.files[0]
+    if (!file || !activeKit) return
+    const name = file.name.replace(/\.[^.]+$/, '')
+    const reader = new FileReader()
+    reader.onload = ev => {
+      const updated = updateKit(activeKit.id, {
+        fonts: { ...activeKit.fonts, [role]: { name, dataUrl: ev.target.result } }
+      })
+      onKitsUpdate(kits.map(k => k.id === updated.id ? updated : k))
+      setFontsNeeded(prev => prev.filter(f => f.role !== role))
+    }
+    reader.readAsDataURL(file)
     e.target.value = ''
   }
 
@@ -522,14 +625,24 @@ function ContenidoPanel({
       return
     }
 
+    // Preserve design context (colors, layout, image) from current slide
+    const design = {}
+    const s = slideData
+    if (s.bgColor)      design.bgColor      = s.bgColor
+    if (s.primaryColor) design.primaryColor = s.primaryColor
+    if (s.accentColor)  design.accentColor  = s.accentColor
+    if (s.layout)       design.layout       = s.layout
+    if (s.bgImage)      design.bgImage      = s.bgImage
+    if (s.bgOpacity != null) design.bgOpacity = s.bgOpacity
+
     if (data.format === 'carousel') {
       const raw = Array.isArray(data.slides) ? data.slides.slice(0, 10) : []
-      onSlidesChange(raw.length > 0 ? raw : [{}])
+      onSlidesChange(raw.length > 0 ? raw.map(s => ({ ...design, ...s })) : [{ ...design }])
     } else {
       onSlidesChange([{
+        ...design,
         category: data.category, title: data.title,
         subtitle: data.subtitle, footer: data.footer,
-        accentColor: data.accentColor
       }])
     }
   }
@@ -582,11 +695,37 @@ function ContenidoPanel({
                 {brandContext.trim() ? 'Contexto de marca ✓' : 'Contexto de marca…'}
               </span>
             </button>
-            <label title="Cargar archivo .md" className="w-6 h-6 rounded flex items-center justify-center hover:bg-black/[0.06] dark:hover:bg-white/[0.07] transition-colors cursor-pointer shrink-0">
-              <ExternalLink className="w-3 h-3 text-black/30 dark:text-white/30 rotate-180" />
-              <input type="file" accept=".md,.txt" className="hidden" onChange={handleContextFile} />
-            </label>
+            <div className="flex items-center gap-1 shrink-0">
+              {isExtracting && <Loader2 className="w-3 h-3 text-black/30 dark:text-white/30 animate-spin" />}
+              {extractMsg && !isExtracting && (
+                <span className={`text-[10px] ${extractMsg.includes('✓') ? 'text-black/40 dark:text-white/40' : 'text-red-400'}`}>{extractMsg}</span>
+              )}
+              <label title="Cargar archivo .md" className="w-6 h-6 rounded flex items-center justify-center hover:bg-black/[0.06] dark:hover:bg-white/[0.07] transition-colors cursor-pointer">
+                <ExternalLink className="w-3 h-3 text-black/30 dark:text-white/30 rotate-180" />
+                <input type="file" accept=".md,.txt" className="hidden" onChange={handleContextFile} />
+              </label>
+            </div>
           </div>
+          {isExtracting && (
+            <p className="text-[10px] text-black/30 dark:text-white/30 px-1 pb-1">Analizando brand system…</p>
+          )}
+          {fontsNeeded.length > 0 && (
+            <div className="mt-1 mb-2 rounded-lg bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.05] px-3 py-2.5 space-y-2">
+              <p className="text-[10px] text-black/40 dark:text-white/40">Fuentes no encontradas en Google Fonts:</p>
+              {fontsNeeded.map(({ role, name }) => (
+                <div key={role} className="flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <span className="text-[11px] text-black/60 dark:text-white/60 font-medium">{name}</span>
+                    <span className="text-[10px] text-black/30 dark:text-white/30 ml-1.5 capitalize">({role === 'title' ? 'Título' : role === 'body' ? 'Cuerpo' : 'Auxiliar'})</span>
+                  </div>
+                  <label className="text-[10px] border border-black/[0.08] dark:border-white/[0.07] px-2 py-1 cursor-pointer hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors whitespace-nowrap shrink-0" style={{ borderRadius: 3 }}>
+                    Cargar .ttf/.otf
+                    <input type="file" accept=".ttf,.otf" className="hidden" onChange={e => handleFontFile(e, role)} />
+                  </label>
+                </div>
+              ))}
+            </div>
+          )}
           {showContext && (
             <textarea
               rows={5}

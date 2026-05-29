@@ -64,6 +64,7 @@ function FontRow({ label, font, onChange }) {
 }
 
 function KitPanel({ kit, onClose, onUpdate, onDelete }) {
+  const [imageSizeError, setImageSizeError] = useState('')
   const [form, setForm] = useState({
     name:   kit.name,
     colors: {
@@ -95,11 +96,17 @@ function KitPanel({ kit, onClose, onUpdate, onDelete }) {
   function handleImages(e) {
     const files = [...e.target.files]
     if (!files.length) return
-    files.forEach(file => {
+    setImageSizeError('')
+    const MAX_SIZE = 2 * 1024 * 1024
+    const oversized = files.filter(f => f.size > MAX_SIZE)
+    if (oversized.length > 0) {
+      setImageSizeError(`${oversized.length} imagen(es) superan 2 MB y no se cargaron.`)
+    }
+    files.filter(f => f.size <= MAX_SIZE).forEach(file => {
       const reader = new FileReader()
       reader.onload = ev => setForm(f => ({
         ...f,
-        images: [...f.images, ev.target.result].slice(0, 10)
+        images: [...f.images, ev.target.result].slice(0, 20)
       }))
       reader.readAsDataURL(file)
     })
@@ -200,7 +207,7 @@ function KitPanel({ kit, onClose, onUpdate, onDelete }) {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Imágenes de marca</Label>
-              <span className="text-[10px] text-black/25 dark:text-white/25">{form.images.length}/10</span>
+              <span className="text-[10px] text-black/25 dark:text-white/25">{form.images.length}/20</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {form.images.map((img, i) => (
@@ -213,13 +220,16 @@ function KitPanel({ kit, onClose, onUpdate, onDelete }) {
                   </button>
                 </div>
               ))}
-              {form.images.length < 10 && (
+              {form.images.length < 20 && (
                 <label className="w-14 h-14 border border-dashed border-black/10 dark:border-white/10 flex items-center justify-center cursor-pointer hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors" style={{ borderRadius: 4 }}>
                   <Upload className="w-4 h-4 text-black/25 dark:text-white/25" />
                   <input type="file" accept="image/png,image/jpeg" onChange={handleImages} className="hidden" multiple />
                 </label>
               )}
             </div>
+            {imageSizeError && (
+              <p className="text-[11px] text-red-500 mt-1">{imageSizeError}</p>
+            )}
           </div>
 
         </div>
